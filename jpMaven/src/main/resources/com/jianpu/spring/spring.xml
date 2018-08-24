@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/aop
+	http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+	http://www.springframework.org/schema/context 
+	http://www.springframework.org/schema/context/spring-context-3.2.xsd
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx-3.2.xsd">
+	<!-- 1 包扫描 排除controller注解 2 引入小配置文件 3 数据源 4 spring 与mybatis整合 SqlSessionFactoryBean 
+		1 数据源 2 mapper文件 3 别名 5 扫描创建dao SqlSessionFactoryBeanName value=sqlSessionFactoryBean 
+		2 指定dao接口所在包 6 事务管理器 注解式事务 -->
+	
+		<!-- 引入db配置小文件 -->
+	<context:property-placeholder location="classpath:com/jianpu/conf/db.properties" />
+		<!-- 注解式包烧苗 -->
+	<context:component-scan base-package="com.jianpu.service,com.jianpu.advice"></context:component-scan>
+	
+	<import resource="classpath:com/jianpu/spring/spring-shiro.xml" />
+	<!-- 数据库连接 配置数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+		<property name="url" value="${jdbc.url}" />
+		<property name="username" value="${name}" />
+		<property name="password" value="${password}" />
+	</bean>
+
+	<!-- spring整合mybatis-config -->
+	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 依赖数据源 -->
+		<property name="dataSource" ref="dataSource" />
+		<!-- 注入mapper文件 注意 value 中是xml文件 中间用/分隔 -->
+		<property name="mapperLocations" value="classpath:com/jianpu/mapper/*.xml" />
+		<!-- 实体类别名 -->
+		<property name="typeAliasesPackage" value="com.jianpu.model" />
+	</bean>
+	<!-- 通过扫描dao包创建dao实例对象 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 依赖sqlsessionfactory -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactoryBean" />
+		<!-- dao包 -->
+		<property name="basePackage" value="com.jianpu.dao" />
+	</bean>
+	
+	<!-- 事务管理器--> 
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<!--  依赖数据源 -->
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	
+	
+	
+	<!-- 注解式事务 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	
+	 <aop:aspectj-autoproxy proxy-target-class="true"></aop:aspectj-autoproxy> 
+	
+	
+	<!-- <import resource="classpath:spring/spring-shiro.xml"/> -->
+	
+	
+	
+</beans>
+

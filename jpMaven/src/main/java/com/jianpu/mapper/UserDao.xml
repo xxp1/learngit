@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.jianpu.dao.UserDao">
+	<select id="selectAll" resultType="User">
+		
+		select id,iphone,password,image,faming,username,sex,address,qianming,status from t_user
+		
+	</select>
+	
+	<insert id="insertUser" parameterType="User">
+		insert into t_user(iphone,password,image,faming,username,sex,address,qianming,status) values(#{iphone},#{password},#{image},#{faming},#{username},#{sex},#{address},#{qianming},#{status})
+		
+		
+	</insert>
+	
+	<select id="selectUser" resultType="User">
+  		select id,iphone,password,image,faming,username,sex,address,qianming,status 
+		from(
+			select id,iphone,password,image,faming,username,sex,address,qianming,status from t_user
+		) tb1
+     	limit ${(page-1)*rows},#{rows}
+  		
+  	</select>
+	
+	<select id="select" resultType="int">
+		select count(*) from t_user
+		
+	</select>
+	
+	
+	
+	
+</mapper>

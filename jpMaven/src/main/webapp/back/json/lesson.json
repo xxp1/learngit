@@ -1,0 +1,9 @@
+[{"children":[{"id":"2ccb0032-9789-4b4d-b7b4-5546c0bb4de1","name":"lesson one","count":"4"},
+{"id":"f600709c-d0c6-4eb8-bf5b-a0c9f5b320da","name":"lesson two","count":"6"}],
+"id":"a568305e-bdc7-47a7-9c2f-57af5b55cb43","name":"持咒诵经","type":"must"},
+{"children":[{"id":"ac34973d-1d53-4d1f-a833-6bad2900c0b9","name":"lesson one","count":"4"},
+{"id":"c6fbff75-397a-40c3-b422-228e00ec6f18","name":"lesson two","count":"6"}],
+"id":"c60c599f-e34c-4b54-9e62-f4a6a70c7f05","name":"诚心礼佛","type":"must"},
+{"children":[{"id":"65bfe23b-7ff4-4982-aead-c38ec33b45ac","name":"lesson one","count":"4"},
+{"id":"915075d0-5b53-4fc6-8576-2008f474b841","name":"lesson two","count":"6"}],
+"id":"e3142622-60b4-4f72-94ac-acc4a05b1461","name":"自定义课程","type":"elective"}]
